@@ -17,18 +17,11 @@ void entityAttack(struct entity *dealer, struct entity *receiver, int *enemyCoun
     // to do: add a random number between 1 and 3 to determine the sheriff's chance of missing
     // as well as its chance of spawning a friend, based on whether the caller is a entity 'P' or an enemy 'E'
     receiver->hp -= dealer->damage;
-        switch(dealer->playerOrEnemy){
-            case ('P'):
-                printf("Player dealt %d in damage!\n",dealer->damage);
-                    if (receiver->hp <= 0){
-                        *enemyCount-=1;
-                    }
-                break;
-            case ('E'):
-                printf("%s\n", dealer->line);
-                printf("Sheriff dealt %d in damage!\n",dealer->damage);
-                break;
-    }
+    printf("%s", dealer->line);
+    printf("\n%s dealt %d damage to %s!\n", dealer->name, dealer->damage, receiver->name);
+        if ((receiver->hp <= 0) && (receiver->playerOrEnemy == 'E')){
+            *enemyCount-=1;
+        }
 }
 
 
@@ -37,9 +30,9 @@ int main(){
     struct entity plyr = {"Player", 10, 2, "", 'P'};
     struct entity *player = &plyr;
 
-    struct entity woody = {"Woody", 6, 2, "There's a snake in my boot!\n", 'E'};
-    struct entity goody = {"Goody", 2, 1, "No hard feelings...\n", 'E'};
-    struct entity hoody = {"Hoody", 2, 1, "I'm just a poor boy. I need no sympathy.\n", 'E'};
+    struct entity woody = {"Woody", 6, 2, "There's a snake in my boot!\n\n", 'E'};
+    struct entity goody = {"Goody", 2, 1, "No hard feelings...\n\n", 'E'};
+    struct entity hoody = {"Hoody", 2, 1, "I'm just a poor boy. I need no sympathy.\n\n", 'E'};
 
     struct entity* sheriff_array[3] = {&woody, &goody, &hoody};
 
@@ -71,13 +64,10 @@ int main(){
         printf("Enemies left: %d\n\n", enemies_left);
         j = -1; // reset targeted enemy
     }
-switch(enemies_left){
-    case(0):
-        printf("You won!\n");
-        break;
-    default:
-        printf("Game over!\n");
-        break;
-    }
-    return 0;
+if(enemies_left == 0){
+    printf("You won!\n");
+} else {
+    printf("Game over!\n");
+}
+return 0;
 }
