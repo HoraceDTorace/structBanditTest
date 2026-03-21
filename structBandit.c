@@ -6,7 +6,7 @@
 
 
 struct entity{
-    char name[6];
+    char name[7];
     int hp;
     int damage;
     char line[50];
