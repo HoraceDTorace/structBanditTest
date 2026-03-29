@@ -6,10 +6,10 @@
 
 
 struct entity{
-    char playerOrEnemy;
-    char name[7];
+    char line[48]; //alternative ordering
     int hp, damage;
-    char line[48]; //total size of struct should be around 64
+    char name[7];
+    char playerOrEnemy;
 };
 
 void entityAttack(struct entity *dealer, struct entity *receiver, int *enemyCount){
@@ -26,12 +26,12 @@ void entityAttack(struct entity *dealer, struct entity *receiver, int *enemyCoun
 
 int main(){
     
-    struct entity plyr = {'P', "Player", 10, 2, ""};
+    struct entity plyr = {"", 10, 2, "Player", 'P',};
     struct entity *player = &plyr;
 
-    struct entity woody = {'E', "Woody", 6, 2, "There's a snake in my boot!\n\n"};
-    struct entity goody = {'E', "Goody", 2, 1, "No hard feelings...\n\n"};
-    struct entity hoody = {'E', "Hoody", 2, 1, "I'm just a poor boy. I need no sympathy.\n\n"};
+    struct entity woody = {"There's a snake in my boot!\n\n", 6, 2, "Woody", 'E'};
+    struct entity goody = {"No hard feelings...\n\n", 2, 1, "Goody", 'E'};
+    struct entity hoody = {"I'm just a poor boy. I need no sympathy.\n\n", 2, 1, "Hoody", 'E'};
 
     struct entity* sheriff_array[3] = {&woody, &goody, &hoody};
 
