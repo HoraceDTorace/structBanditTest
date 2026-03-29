@@ -6,19 +6,18 @@
 
 
 struct entity{
-    char name[7];
-    int hp;
-    int damage;
-    char line[50];
     char playerOrEnemy;
+    char name[7];
+    int hp, damage;
+    char line[48]; //total size of struct should be around 64
 };
 
 void entityAttack(struct entity *dealer, struct entity *receiver, int *enemyCount){
     // to do: add a random number between 1 and 3 to determine the sheriff's chance of missing
     // as well as its chance of spawning a friend, based on whether the caller is a entity 'P' or an enemy 'E'
     receiver->hp -= dealer->damage;
-    printf("%s dealt %d damage to %s!\n", dealer->name, dealer->damage, receiver->name);
     printf("%s", dealer->line);
+    printf("\n%s dealt %d damage to %s!\n", dealer->name, dealer->damage, receiver->name);
         if ((receiver->hp <= 0) && (receiver->playerOrEnemy == 'E')){
             *enemyCount-=1;
         }
@@ -26,12 +25,13 @@ void entityAttack(struct entity *dealer, struct entity *receiver, int *enemyCoun
 
 
 int main(){
+    
+    struct entity plyr = {'P', "Player", 10, 2, ""};
+    struct entity *player = &plyr;
 
-    struct entity player = {"Player", 10, 2, "", 'P'};
-
-    struct entity woody = {"Woody", 6, 2, "\"There's a snake in my boot!\"\n\n", 'E'};
-    struct entity goody = {"Goody", 2, 1, "\"No hard feelings...\"\n\n", 'E'};
-    struct entity hoody = {"Hoody", 2, 1, "\"I'm just a poor boy. I need no sympathy.\"\n\n", 'E'};
+    struct entity woody = {'E', "Woody", 6, 2, "There's a snake in my boot!\n\n"};
+    struct entity goody = {'E', "Goody", 2, 1, "No hard feelings...\n\n"};
+    struct entity hoody = {'E', "Hoody", 2, 1, "I'm just a poor boy. I need no sympathy.\n\n"};
 
     struct entity* sheriff_array[3] = {&woody, &goody, &hoody};
 
@@ -53,10 +53,10 @@ int main(){
             printf("Select index of enemy to attack: ");
             scanf("%d", &j);
         }
-        entityAttack(&player, sheriff_array[j], &enemies_left); // player's turn
+        entityAttack(player, sheriff_array[j], &enemies_left); // player's turn
         for(int k = 0; k < len; k++){ // enemy's turn
             if (sheriff_array[k]->hp > 0){
-                entityAttack(sheriff_array[k], &player, &enemies_left);
+                entityAttack(sheriff_array[k], player, &enemies_left);
             }
         }
         printf("\nPlayer's HP: %d\n", player.hp);
