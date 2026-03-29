@@ -26,7 +26,7 @@ void entityAttack(struct entity *dealer, struct entity *receiver, int *enemyCoun
 
 int main(){
     
-    struct entity plyr = {"", 10, 2, "Player", 'P',};
+    struct entity plyr = {"", 10, 2, "Player", 'P'};
     struct entity *player = &plyr;
 
     struct entity woody = {"There's a snake in my boot!\n\n", 6, 2, "Woody", 'E'};
